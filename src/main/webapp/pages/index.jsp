@@ -89,15 +89,15 @@
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>统计页面</cite></a>
                             </li>
+<%--                            <li>--%>
+<%--                                <a onclick="xadmin.add_tab('会员列表(静态表格)','member-list.html')">--%>
+<%--                                    <i class="iconfont">&#xe6a7;</i>--%>
+<%--                                    <cite>会员列表(静态表格)</cite></a>--%>
+<%--                            </li>--%>
                             <li>
-                                <a onclick="xadmin.add_tab('会员列表(静态表格)','member-list.html')">
+                                <a onclick="xadmin.add_tab('会员列表','user-list.jsp',true)">
                                     <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员列表(静态表格)</cite></a>
-                            </li>
-                            <li>
-                                <a onclick="xadmin.add_tab('会员列表(动态表格)','member-list1.html',true)">
-                                    <i class="iconfont">&#xe6a7;</i>
-                                    <cite>会员列表(动态表格)</cite></a>
+                                    <cite>会员列表</cite></a>
                             </li>
                             <li>
                                 <a onclick="xadmin.add_tab('会员删除','member-del.html')">

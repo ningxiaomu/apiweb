@@ -11,4 +11,11 @@ public interface UserService extends UserDetailsService {
     //根据用户名去查找用户 -》返回一个userInfo
     UserInfo findUserByName(String username);
 
+    /**
+     * 分页查询用户
+     * @param page
+     * @param size
+     * @return
+     */
+    List<UserInfo> findAllUserPage(int page, int size);
 }

@@ -66,4 +66,53 @@ public class CaseServiceImpl implements CaseService {
         return list;
 
     }
+
+    @Override
+    public boolean delSelectCase(String caseid) {
+        boolean flag;
+        caseDao.delSelectCase(caseid);
+        CaseInfo caseInfo=caseDao.findCaseByCaseid(caseid);
+        System.out.println("CaseService里的caseinfo:"+caseInfo);
+        if(caseInfo==null){
+            //删除成功
+            flag = true;
+        }else {
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    @Override
+    public CaseInfo findCaseById(String caseid) {
+        return null;
+    }
+
+    @Override
+    public boolean editCase(CaseInfo caseInfo) {
+        boolean flag;
+        String caseid=caseInfo.getCaseid();
+        System.out.println("caseInfoBefore"+caseInfo);
+        caseDao.editCase(caseInfo);
+        CaseInfo caseInfoAfter = null;
+        try{
+            caseInfoAfter = caseDao.findCaseByCaseid(caseid);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("caseInfoAfter:"+caseInfoAfter);
+        if(caseInfo.getCaseName().equals(caseInfoAfter.getCaseName())&caseInfo.getProject().equals(caseInfoAfter.getProject())&caseInfo.getDomain().equals(caseInfoAfter.getDomain())&caseInfo.getContentType().equals(caseInfoAfter.getContentType())&caseInfo.getRequestAddress().equals(caseInfoAfter.getRequestAddress())&caseInfo.getMethod().equals(caseInfoAfter.getMethod())&caseInfo.getParameter().equals(caseInfoAfter.getParameter())&caseInfo.getStatus().equals(caseInfoAfter.getStatus())&caseInfo.getExResult().equals(caseInfoAfter.getExResult())){
+            flag = true;
+        }else{
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
+    public String findProjectById(String caseid) {
+        return caseDao.findProjectById(caseid);
+    }
+
+
 }

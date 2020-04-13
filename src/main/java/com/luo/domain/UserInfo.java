@@ -1,5 +1,6 @@
 package com.luo.domain;
 
+import java.util.Date;
 import java.util.List;
 
 //用户信息
@@ -9,10 +10,19 @@ public class UserInfo {
     private String password;
     private String email;
     private String phoneNum;
+    private Date joinTime;
     private Integer status;
     private String statusStr;
     private List<RoleInfo> UserRoleInfos;
     private List<RoleInfo> roles;
+
+    public Date getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
+    }
 
     public List<RoleInfo> getRoles() {
         return roles;
@@ -101,6 +111,7 @@ public class UserInfo {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNum='" + phoneNum + '\'' +
+                ", joinTime=" + joinTime +
                 ", status=" + status +
                 ", statusStr='" + statusStr + '\'' +
                 ", UserRoleInfos=" + UserRoleInfos +

@@ -61,4 +61,33 @@ public interface CaseService {
      * @return
      */
     List<CaseInfo> findAllSelectCasePage(String projectName,int page, int size);
+
+
+    /**
+     * 根据用例id删除用例
+     * @param caseid
+     * @return
+     */
+    boolean delSelectCase(String caseid);
+
+    /**
+     * 根据用例id查找用例
+     * @param caseid
+     * @return
+     */
+    CaseInfo findCaseById(String caseid);
+
+    /**
+     * 更新用例
+     * @param caseInfo
+     * @return
+     */
+    boolean editCase(CaseInfo caseInfo);
+
+    /**
+     * 根据id获取project名字
+     * @param caseid
+     * @return
+     */
+    String findProjectById(String caseid);
 }

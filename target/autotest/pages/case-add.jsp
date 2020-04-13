@@ -60,7 +60,7 @@
                         </div>
                         <div class="layui-form-mid layui-word-aux">
                             <%--                          <span class="x-red">*</span>--%>
-                            <span>非必填</span>
+                            <span>必填</span>
                         </div>
                     </div>
                     <!--请求地址-->

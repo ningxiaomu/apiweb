@@ -1,8 +1,10 @@
 package com.luo.dao;
 
 import com.luo.domain.CaseInfo;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -63,4 +65,26 @@ public interface CaseDao {
      */
     @Select("select * from mycase where project=#{projectName}")
     List<CaseInfo> findAllSelectCase(String projectName);
+
+    /**
+     * 根据用例id去删除用例
+     * @param caseid
+     */
+    @Delete("delete from mycase where caseid=#{caseid}")
+    void delSelectCase(String caseid);
+
+    /**
+     * 更新用例
+     * @param caseInfo
+     */
+    @Update("update  mycase set caseName=#{caseName},project=#{project},domain=#{domain},requestAddress=#{requestAddress},method=#{method},contentType=#{contentType},parameter=#{parameter},exResult=#{exResult},status=#{status} where caseid=#{caseid}")
+    void editCase(CaseInfo caseInfo);
+
+    /**
+     *
+     * @param caseid
+     * @return
+     */
+    @Select("select project from mycase where caseid=#{caseid}")
+    String findProjectById(String caseid);
 }

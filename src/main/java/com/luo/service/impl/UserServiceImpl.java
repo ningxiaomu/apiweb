@@ -1,5 +1,6 @@
 package com.luo.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.luo.dao.UserDao;
 import com.luo.domain.RoleInfo;
 import com.luo.domain.UserInfo;
@@ -50,11 +51,17 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public List<UserInfo> findAllUser() {
-        return null;
+        return userDao.findAllUser();
     }
 
     @Override
     public UserInfo findUserByName(String username) {
         return null;
+    }
+
+    @Override
+    public List<UserInfo> findAllUserPage(int page, int size) {
+        PageHelper.startPage(page,size);
+        return userDao.findAllUser();
     }
 }

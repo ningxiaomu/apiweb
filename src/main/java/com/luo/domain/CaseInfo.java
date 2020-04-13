@@ -1,7 +1,7 @@
 package com.luo.domain;
 
 public class CaseInfo {
-//`caseid`,`caseName`,`project`,`domain`,`requestAddress`,`method`,`contentType`,`parameter`,`exResult`,`status`
+
     private String caseid;
     private String caseName;
     private String project;

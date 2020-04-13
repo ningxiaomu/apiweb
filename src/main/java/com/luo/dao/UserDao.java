@@ -45,6 +45,7 @@ public interface UserDao {
             @Result(property = "email", column = "email"),
             @Result(property = "password", column = "password"),
             @Result(property = "phoneNum", column = "phoneNum"),
+            @Result(property = "joinTime", column = "joinTime"),
             @Result(property = "status", column = "status"),
     })
     List<UserInfo> findAllUser();

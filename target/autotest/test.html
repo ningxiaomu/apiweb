@@ -92,84 +92,79 @@
     <div class="Pagination" id="pagination"></div>
 </div>
 
+<form method="post" action="#">
 
-<div class="pages">
-    <div id="Pagination1">
-        <div id="p">
-            <a class="current prev"><i></i>上一页</a>
-            <a class="current">1</a>
-            <a href="##">2</a>
-            <a href="##">3</a>
-            <a href="##">4</a>
-            <a href="##">5</a>
-            <a href="##">6</a>
-            <a href="##">7</a>
-            <a href="##">8</a>
-
-        </div>
+<div class="layui-form-item">
+    <label for="caseid" class="layui-form-label">
+        <span class="x-red">*</span>caseName
+    </label>
+    <div class="layui-input-inline">
+        <input type="text" id="caseid" name="caseid" required="" lay-verify="required"
+               autocomplete="off" class="layui-input" readonly="readonly" value="caseid">
+    </div>
+    <div class="layui-form-mid layui-word-aux">
+        <span class="x-red">*</span>用例名称
     </div>
 </div>
+
 <button id="btn">btn</button>
+</form>
+<div align="center">
+
+    <table>
+        <tr><td>Header 1</td></tr>
+        <tr><td>Value 1</td></tr>
+        <tr><td>Value 2</td></tr>
+    </table>
+
+
+    <button id="btntb">遍历table</button>
+
+</div>
 </body>
 <script>
-    $('#btn').click(function () {
-        var res=$('#p a').text()
-        alert(res)
-        var result=3;
-        $('#p a').each(function () {
-            if($(this).text()==result){
-                $(this).addClass("xxxxxxx");
-            }
-        })
+    // $('#btntb').click(function(){
+    //     $('#tab tr').each(function(i){                   // 遍历 tr
+    //         $(this).children('td').each(function(j){  // 遍历 tr 的各个 td
+    //             alert("第"+(i+1)+"行，第"+(j+1)+"个td的值："+$(this).text()+"。");
+    //             console.log($(this).text())
+    //         });
+    //     });
+    // });
+    // var tb = document.getElementById('tab');    // table 的 id
+    // var rows = tb.rows;                           // 获取表格所有行
+    // for(var i = 0; i<rows.length; i++ ){
+    //     for(var j = 0; j<rows[i].cells.length; j++ ){    // 遍历该行的 td
+    //         alert("第"+(i+1)+"行，第"+(j+1)+"个td的值："+rows[i].cells[j].innerHTML+"。");           // 输出每个td的内容
+    //     }
+    // }
+    alert( $("tr:eq(1)").text() )
+</script>
+<script>
+    $('#caseid').blur(function () {
+        var $parent = $(this).parent();
+        var reWrite = $('#caseid').val();
+        console.log(reWrite)
+        var caseid_1 = "请选择项目";
+        if(reWrite!=caseid_1){
+            var errorMsg = " 姓名非空，长度6位以上，不包含特殊字符！";
+            //class='msg onError' 中间的空格是层叠样式的格式
+            $parent.append("<span class='msg onError'>" + errorMsg + "</span>");
+        }
+        else{
+            var okMsg=" 输入正确";
+            $parent.find(".high").remove();
+            $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+        }
     })
 </script>
 <script>
-    // $(document).ready(function() {
-    //     var a=15
-    //     $("#Pagination").pagination(a);
-    //     $('.pages').find('a').each(function(){
-    //         $(this).click(function(){
-    //             console.log($(this).html())
-    //         })
-    //     })
+ document.getElementById("btn").onclick=function () {
+     alert($('#in').val())
+ }
 </script>
-<!--<script>-->
-<!--    //测试pagination插件-->
-<!--    var pageSize=10-->
 
 
-<!--    $(function () {-->
-<!--        $.ajax({-->
-<!--            type:"POST",-->
-<!--            dataType:"json",-->
-<!--            url:"/case/findAllCase",-->
-<!--            contentType:"application/json;charset=utf-8",-->
-<!--            success:function (data) {-->
-<!--                var showNum=5;-->
-<!--                var dataLength=data.result.length;-->
-<!--                var pageNum = Math.ceil(dataLength / showNum);-->
-
-<!--                $('#itbody').pagination(pageNum,{-->
-<!--                    num_edge_entries: 1, //边缘页数-->
-<!--                    num_display_entries: 4, //主体页数-->
-<!--                    items_per_page: 1, //每页显示1项-->
-<!--                    prev_text: "上一页",-->
-<!--                    next_text: "下一页",-->
-<!--                    callback :function (index) {-->
-<!--                        var $table=$('table tbody');-->
-<!--                        for(var i = showNum * index; i < showNum * index + showNum; i++){-->
-<!--                            if(i < dataLength) {-->
-<!--                                var $tr = $("<tr>" + "</tr>");-->
-<!--                                $table.append($tr);-->
-<!--                                $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"</td>"+"<td>"+data.result[i].statusStr+"</td>")-->
-<!--                            }-->
-<!--                        }-->
-<!--                    },-->
-<!--                })-->
-<!--            }-->
-<!--        })-->
-<!--    })-->
-<!--</script>-->
  <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
      <i class="layui-icon">&#xe642;</i>
   </a>
