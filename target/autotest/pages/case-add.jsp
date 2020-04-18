@@ -161,8 +161,16 @@
             </div>
         </div>
 
+        <script>
+                // var name=$("#projectSelect").val();
+                // console.log("选择框的值1："+parent.document.getElementById("projectSelect").innerText)
+                // console.log("选择框的值2："+parent.document.getElementById("projectSelect").textContent)
+                // console.log("选择框的值："+parent.document.getElementById("projectSelect").options[1].text)
+                //console.log("选择框的值："+parent.document.getElementById("projectSelect").value)
+        </script>
         <script type="text/javascript">
-
+            console.log('我进入了case-add添加页面')
+            console.log("选择框的值："+$('#project').val())
             function case_add() {
                 var formObject = {};
                 var formArray =$("#saveCase").serializeArray();
@@ -182,7 +190,9 @@
                             alert("增加成功");
                             xadmin.close();
                             // 可以对父窗口进行刷新
-                            xadmin.father_reload();
+                            //xadmin.father_reload();
+                           // parent.location.href  ="/case/findAllSelectCaseAfterEdit?size=10&page=1&projectName="+$('#project').val();
+                           window.parent.location.reload()
                         }else{
                             alert("添加失败");
                             xadmin.close();
@@ -206,16 +216,27 @@
                     dataType: 'json',
                     type: 'post',
                     success: function (data) {
-                        $('#project').append(new Option("请选择项目"))
+                        var p=parent.document.getElementById("projectSelect").value
+                        $('#project').append(new Option(p))
                         var list = [];
                         for (var i = 0; i <data.result.length ; i++) {
+
                             list.push(data.result[i].projectName)
+
                         }
+
+                        //删除重复的元素
+                        for(var i=0;i<list.length;i++){
+                            if(list[i]==p){
+                                list.splice(i,1);
+                            }
+                        }
+                        console.log("最后的list为："+list)
+
                         $.each(list, function (i, item) {
                             $('#project').append(new Option(item));// 下拉菜单里添加元素
                         });
                         layui.form.render("select");
-                        //重新渲染 固定写法
                     }
                 })
             })

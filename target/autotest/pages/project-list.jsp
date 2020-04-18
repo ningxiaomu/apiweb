@@ -95,7 +95,6 @@
                 url:"/project/findAllProject",
                 contentType:"application/json;charset=utf-8",
                 success:function (data) {
-                    //<div class="layui-unselect layui-form-checkbox" lay-skin="primary"><i class="layui-icon layui-icon-ok"></i></div>
                     var $table=$('table tbody');
                     for (var i = 0; i <data.result.length; i++) {
                         var $tr=$("<tr>"+"</tr>");

@@ -66,7 +66,7 @@ public class CaseController {
 
     @RequestMapping("/findAllSelectCase")
     @ResponseBody
-    public ModelAndView findAllSelectCase(String projectName,@RequestParam(name = "page",required = true,defaultValue = "1") int page,@RequestParam(name="size",required = true,defaultValue = "10") int size){
+    public ModelAndView findAllSelectCase(String projectName,@RequestParam(name = "page",required = true,defaultValue = "1") Integer page,@RequestParam(name="size",required = true,defaultValue = "10") Integer size){
         List<CaseInfo> list = new ArrayList<>();
         list = caseService.findAllSelectCasePage(projectName,page, size);
         PageInfo pageInfo = new PageInfo(list);
@@ -80,10 +80,11 @@ public class CaseController {
 
     @RequestMapping("/findAllSelectCaseAfterEdit")
     @ResponseBody
-    public ModelAndView findAllSelectCaseAfterEdit(String projectName,@RequestParam(name = "page",required = true,defaultValue = "1") int page,@RequestParam(name="size",required = true,defaultValue = "10") int size){
+    public ModelAndView findAllSelectCaseAfterEdit(String projectName,@RequestParam(name = "page",required = true,defaultValue = "1") Integer page,@RequestParam(name="size",required = true,defaultValue = "10") Integer size){
         ModelAndView modelAndView = new ModelAndView();
         List<CaseInfo> list = new ArrayList<>();
         list = caseService.findAllSelectCasePage(projectName,page, size);
+        System.out.println("编辑过后的list:"+list);
         PageInfo pageInfo = new PageInfo(list);
         System.out.println("pageInfo:"+pageInfo);
         modelAndView.addObject("pageInfo",pageInfo);
@@ -94,10 +95,23 @@ public class CaseController {
 
     }
 
+    @RequestMapping("/findAllSelectCaseAfterAdd")
+    public ModelAndView findAllSelectCaseAfterAdd(String projectName,@RequestParam(name = "page",required = true,defaultValue = "1") Integer page,@RequestParam(name="size",required = true,defaultValue = "10") Integer size){
+        ModelAndView modelAndView = new ModelAndView();
+        List<CaseInfo> list = new ArrayList<>();
+        list = caseService.findAllSelectCasePage(projectName,page, size);
+        PageInfo pageInfo = new PageInfo(list);
+        System.out.println("pageInfo:"+pageInfo);
+        modelAndView.addObject("pageInfo",pageInfo);
+        modelAndView.addObject("caselist",list);
+        modelAndView.setViewName("case-list-add");
+        return modelAndView;
+    }
+
     @RequestMapping("/findAllCasePage")
     @ResponseBody
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ModelAndView findAllCasePage(@RequestParam(name="page",required = true,defaultValue = "1") int page, @RequestParam(name="size",required = true,defaultValue = "10") int size){
+    public ModelAndView findAllCasePage(@RequestParam(name="page",required = true,defaultValue = "1") Integer page, @RequestParam(name="size",required = true,defaultValue = "10") Integer size){
         List<CaseInfo> list = new ArrayList<>();
         list = caseService.findAllCasePage(page, size);
         PageInfo pageInfo = new PageInfo(list);
@@ -129,7 +143,7 @@ public class CaseController {
     }
 
     /**
-     * 根据caseid去查找case
+     * 根据caseid去查找case,不是返回json
      *  @param caseid
      * @return
      */
@@ -141,6 +155,15 @@ public class CaseController {
         modelAndView.setViewName("case-edit");
         System.out.println("caseInfo:"+caseInfo);
         return modelAndView;
+    }
+
+    @RequestMapping("findCaseByIdReturnJson")
+    public ModelAndView findCaseByIdReturnJson(@RequestParam(value ="caseid" ,required = true) String caseid){
+        List<CaseInfo> list = new ArrayList<>();
+        list=caseService.findCaseByIdReturnJson(caseid);
+        Map<String,List<CaseInfo>> map = new HashMap<>();
+        map.put("result",list);
+        return new ModelAndView(new MappingJackson2JsonView(),map);
     }
 
     /**

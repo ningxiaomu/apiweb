@@ -64,4 +64,25 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(page,size);
         return userDao.findAllUser();
     }
+
+    @Override
+    public List<UserInfo> findUserDel(int page, int size) {
+        PageHelper.startPage(page, size);
+        return userDao.findDelUser();
+    }
+
+    @Override
+    public String getUserCount() {
+        return userDao.getUserCount();
+    }
+
+    @Override
+    public String getProjectCount() {
+        return userDao.getProjectCount();
+    }
+
+    @Override
+    public String getCaseCount() {
+        return userDao.getCaseCount();
+    }
 }

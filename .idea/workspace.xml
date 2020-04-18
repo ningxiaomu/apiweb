@@ -7,53 +7,79 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59c023df-8b07-4cb0-9f17-958ec272cbf5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-list-edit.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/controller/LogAop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/controller/RoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/controller/SysLogController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/dao/SysLogDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/domain/SysLog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/RoleService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/SysLogService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/impl/RoleServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/impl/SysLogServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/css/layer.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/js/layer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/a.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/b.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-edit-list.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-list-add.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/log-operation.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/role-list.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/pages/user-del.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/controller/CaseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/controller/CaseController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/dao/CaseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/dao/CaseDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/domain/CaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/domain/CaseInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/domain/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/domain/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/domain/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/domain/test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/service/CaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/CaseService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/service/impl/CaseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/impl/CaseServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/luo/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/luo/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spring-security.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring-security.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/admin-edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-edit.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/springmvc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/springmvc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/case-add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-add.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/case-edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-edit.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/case-list-edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-list-edit.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/case-list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/case-list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/member-list.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/project-list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/project-list.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/role-add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/role-add.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/pages/welcome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/pages/welcome.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/test.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest.war" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/applicationContext.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/controller/CaseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/controller/CaseController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/dao/CaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/dao/CaseDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/dao/UserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/domain/UserInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/domain/UserInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/domain/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/domain/test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/CaseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/CaseService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/impl/CaseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/impl/CaseServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/com/luo/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/spring-security.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/spring-security.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/autotest/pages/admin-edit.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/springmvc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/classes/springmvc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/WEB-INF/web.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/pages/case-add.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/pages/case-add.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/pages/case-edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/pages/case-edit.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/pages/case-list-edit.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/pages/case-list-edit.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/pages/case-list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/pages/case-list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/pages/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/pages/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/autotest/pages/member-list.jsp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/pages/welcome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/pages/welcome.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/autotest/test.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/autotest/test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/applicationContext.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/controller/CaseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/controller/CaseController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/controller/UserController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/dao/CaseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/dao/CaseDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/dao/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/dao/UserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/luo/domain/UserInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/domain/UserInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/luo/domain/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/domain/test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/service/CaseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/service/CaseService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/service/impl/CaseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/service/impl/CaseServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/luo/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/luo/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/spring-security.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring-security.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/springmvc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/springmvc.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,8 +91,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jsp File" />
-        <option value="Interface" />
         <option value="HTML File" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -249,7 +275,14 @@
       <workItem from="1586526334795" duration="3473000" />
       <workItem from="1586574613196" duration="17841000" />
       <workItem from="1586657414178" duration="37114000" />
-      <workItem from="1586751400347" duration="8378000" />
+      <workItem from="1586751400347" duration="12396000" />
+      <workItem from="1586792031156" duration="5591000" />
+      <workItem from="1586833567454" duration="1917000" />
+      <workItem from="1586835553314" duration="16158000" />
+      <workItem from="1586913729735" duration="15572000" />
+      <workItem from="1587008444425" duration="33716000" />
+      <workItem from="1587091621875" duration="27437000" />
+      <workItem from="1587178272562" duration="9082000" />
     </task>
     <servers />
   </component>

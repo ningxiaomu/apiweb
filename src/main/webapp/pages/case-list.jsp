@@ -13,9 +13,12 @@
         <link rel="stylesheet" href="../css/font.css">
         <link rel="stylesheet" href="../css/xadmin.css">
         <link rel="stylesheet" href="../css/pagination.css">
+        <link rel="stylesheet" href="../css/layer.css">
+        <link rel="stylesheet" href="../js/layer.js">
         <script src="../lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="../js/xadmin.js"></script>
         <script type="text/javascript" src="../js/jquery.min.js"></script>
+        <script type="text/javascript" src="../js/layer.js"></script>
         <script type="text/javascript" src="../js/jquery.pagination.js"></script>
         <!--[if lt IE 9]>
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -40,22 +43,20 @@
                         <div class="layui-card-body ">
                             <form class="layui-form" id="findAppointCase" class="layui-form" action="##" method="post">
                                 <div class="layui-inline layui-show-xs-block">
-                                    <label for="projectSelect" class="layui-form-label">查询指定用例</label>
+                                    <label for="projectSelect" class="layui-form-label" >查询指定用例</label>
                                     <div class="layui-input-inline">
                                         <select  id="projectSelect" name="projectName" lay-verify="required" lay-filter="xmFilter">
                                         </select>
-                                    </div>
-                                    <div class="layui-form-item">
-<%--                                        <input type="button" class="layui-btn" value="搜索" id="L_repass" onclick="case_select(this,this.projectName)">--%>
-                                        <input type="button" class="layui-btn" value="搜索" id="L_repass" onclick="case_select(this,this.projectName)">
-                                    </div>
+                                    </div><input type="button" class="layui-btn" value="搜索" id="L_repass" onclick="case_select(this,this.projectName)">
+<%--                                    <input id="testVal" value="123"><button id="testbtn"  class="layui-btn">btn</button>--%>
+<%--                                    <button id="testbtn1" onclick="next_page()" class="layui-btn">btn</button>--%>
                                 </div>
                             </form>
                         </div>
                         <div class="layui-card-header">
                             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
 <%--                            <security:authorize access="hasAnyRole('ADMIN')">--%>
-                            <button class="layui-btn" onclick="xadmin.open('添加用例','./case-add.jsp',600,400)"><i class="layui-icon"></i>添加</button>
+                            <button class="layui-btn" onclick="xadmin.open('添加用例','./case-add.jsp',800,600)"><i class="layui-icon"></i>添加</button>
 <%--                            </security:authorize>--%>
                         </div>
                         <div class="layui-card-body">
@@ -75,7 +76,7 @@
                                   <th>请求参数</th>
                                   <th>预期结果</th>
                                   <th>启用状态</th>
-<%--                                  <th>操作</th>--%>
+                                  <th>操作</th>
 
                               </thead>
                               <tbody id="itbody">
@@ -98,11 +99,12 @@
                             </div>
                         </div>
                         <div id="testlist"></div>
-                        <div><span id="totalNum">总共${pageInfo.pages}页,共${pageInfo.total}条数据</span></div>
+                        <div><span id="totalNum"></span></div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+        <div id="getId" style="display:none;"></div>
     </body>
     <style>
         #allPageList,#homePage,#previousPage,#nextPage,#tailPage,#L_repass{
@@ -113,10 +115,14 @@
             cursor:pointer;
         }
     </style>
+
+
     <script type="text/javascript">
+        var clickid;
         //点击页码
         var $table=$('table tbody');
         function clickPage(page,size) {
+
             $("table tr td").remove()
             console.log("清除完成")
             $.ajax({
@@ -155,9 +161,25 @@
 
                     for (var i = 0; i < data.result.length; i++) {
                         var $tr=$("<tr>"+"</tr>");
-                        var baseURI="${pageContext.request.contextPath}/case/findCaseById?caseid="
+                        var pages = data.obj.pages
+                        var pageSize = data.obj.pageSize
+                        var pageNum = data.obj.pageNum
+                        var totalNum = data.obj.total
+                        var baseURI="${pageContext.request.contextPath}/pages/"
                         var caseid=data.result[i].caseid
+                        var caseName=data.result[i].caseName
+                        var project=data.result[i].project
+                        var domain=data.result[i].domain
+                        var requestAddress=data.result[i].requestAddress
+                        var method=data.result[i].method
+                        var contentType=data.result[i].contentType
+                        var parameter=data.result[i].parameter
+                        var exResult=data.result[i].exResult
+                        var status=data.result[i].status
+                        var statusStr=data.result[i].statusStr
+                        var projectSelect = $('#projectSelect').val();
                         var statusStrCss;
+                        $('#totalNum').text("总共的页码数："+pages+"；总共的用例条数："+totalNum)
                         $table.append($tr);
                         if(data.result[i].statusStr=='启用'){
                             statusStrCss='layui-btn layui-btn-normal layui-btn-mini';
@@ -167,52 +189,82 @@
                             statusStrCss='layui-btn';
                         }
                         //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑' id='"+caseid+"' href='"+baseURI+""+caseid+"' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
-                        $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>")
+                        $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+caseid+"</td>"+"<td>"+caseName+"</td>"+"<td>"+project+"</td>"+"<td>"+domain+"</td>"+"<td>"+requestAddress+"</td>"+"<td>"+method+"</td>"+"<td>"+contentType+"</td>"+"<td>"+parameter+"</td>"+"<td>"+exResult+"<td class='"+statusStrCss+"' >"+statusStr+"</td>"+"<td>"+"<a title='编辑"+i+"'  onclick='xadmin.open(\"添加用例\",\"case-edit.jsp?caseid="+caseid+"&caseName="+caseName+"&project="+project+"&domain="+domain+"&requestAddress="+requestAddress+"&method="+method+"&contentType="+contentType+"&parameter="+parameter+"&exResult="+exResult+"&status="+status+"&projectSelect="+projectSelect+"\",800,600)' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
+
+                        //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>")
                     }
+
+
                 }
             })
         }
+        layui.use(['element','layer'], function(){
 
-        $(document).ready(function () {
-            var $table=$('table tbody');
-            $.ajax({
-                type:"POST",
-                dataType:"json",
-                url:"/case/findAllCasePage?size=10&page=1",
-                contentType:"application/json;charset=utf-8",
-                success:function (data) {
-                    var pages = data.obj.pages
-                    var pageSize = data.obj.pageSize
-                    var pageNum = data.obj.pageNum
-                    var totalNum = data.obj.total
-                    $('#homePage').append("<a class='prev' onclick='clickPage(1,"+pageSize+")'>首页</a>")
-                    $('#previousPage').append("<a class='prev' onclick='clickPage("+(pageNum-1)+","+pageSize+")'><<</a>")
-                    $('#nextPage').append("<a class='prev' onclick='clickPage("+(pageNum+1)+","+pageSize+")'>>></a>")
-                    $('#tailPage').append("<a class='prev' onclick='clickPage("+pages+","+pageSize+")'>尾页</a>")
-                    $('#totalNum').text("总共的页码数："+pageNum+"；总共的用例条数："+totalNum)
-                    for (var k =1; k<parseInt(data.obj.pages)+1;k++){
+            var element = layui.element;
+
+            var layer = layui.layer ;
+
+            $(document).ready(function () {
+                var $table=$('table tbody');
+                $.ajax({
+                    type:"POST",
+                    dataType:"json",
+                    url:"/case/findAllCasePage?size=10&page=1",
+                    contentType:"application/json;charset=utf-8",
+                    success:function (data) {
+                        var pages = data.obj.pages
+                        var pageSize = data.obj.pageSize
+                        var pageNum = data.obj.pageNum
+                        var totalNum = data.obj.total
+                        $('#homePage').append("<a class='prev' onclick='clickPage(1,"+pageSize+")'>首页</a>")
+                        $('#previousPage').append("<a class='prev' onclick='clickPage("+(pageNum-1)+","+pageSize+")'><<</a>")
+                        $('#nextPage').append("<a class='prev' onclick='clickPage("+(pageNum+1)+","+pageSize+")'>>></a>")
+                        $('#tailPage').append("<a class='prev' onclick='clickPage("+pages+","+pageSize+")'>尾页</a>")
+                        $('#totalNum').text("总共的页码数："+pages+"；总共的用例条数："+totalNum)
+                        for (var k =1; k<parseInt(data.obj.pages)+1;k++){
                             $('#allPageList').append("<a  onclick='clickPage("+k+","+pageSize+")'>"+k+"</a>")
-                    }
-
-                    for (var i = 0; i <data.result.length; i++) {
-                        var $tr=$("<tr>"+"</tr>");
-                        var baseURI="${pageContext.request.contextPath}/case/findCaseById?caseid="
-                        var caseid=data.result[i].caseid
-                        var statusStrCss;
-                        $table.append($tr);
-                        if(data.result[i].statusStr=='启用'){
-                            statusStrCss='layui-btn layui-btn-normal layui-btn-mini';
-                        }else if(data.result[i].statusStr=='停用'){
-                            statusStrCss='layui-btn layui-btn-danger';
-                        }else{
-                            statusStrCss='layui-btn';
                         }
-                        //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑' id='"+caseid+"' href='"+baseURI+""+caseid+"' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
-                        $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>")
+
+                        for (var i = 0; i <data.result.length; i++) {
+                            var $tr=$("<tr>"+"</tr>");
+                            var baseURI="${pageContext.request.contextPath}/case/findCaseById?caseid="
+                            var caseid=data.result[i].caseid
+                            var caseName=data.result[i].caseName
+                            var project=data.result[i].project
+                            var domain=data.result[i].domain
+                            var requestAddress=data.result[i].requestAddress
+                            var method=data.result[i].method
+                            var contentType=data.result[i].contentType
+                            var parameter=data.result[i].parameter
+                            var exResult=data.result[i].exResult
+                            var status=data.result[i].status
+                            var statusStr=data.result[i].statusStr
+                            var projectSelect = $('#projectSelect').val();
+
+                            var statusStrCss;
+                            $table.append($tr);
+                            if(data.result[i].statusStr=='启用'){
+                                statusStrCss='layui-btn layui-btn-normal layui-btn-mini';
+                            }else if(data.result[i].statusStr=='停用'){
+                                statusStrCss='layui-btn layui-btn-danger';
+                            }else{
+                                statusStrCss='layui-btn';
+                            }
+                            //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑' id='"+caseid+"' href='"+baseURI+""+caseid+"' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
+                            //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑"+i+"' id='"+caseid+"' onclick='xadmin.open(\"添加用例\",\"./case-edit.jsp?caseid="+caseid+"\",800,600)' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
+                            $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+caseid+"</td>"+"<td>"+caseName+"</td>"+"<td>"+project+"</td>"+"<td>"+domain+"</td>"+"<td>"+requestAddress+"</td>"+"<td>"+method+"</td>"+"<td>"+contentType+"</td>"+"<td>"+parameter+"</td>"+"<td>"+exResult+"<td class='"+statusStrCss+"' >"+statusStr+"</td>"+"<td>"+"<a title='编辑"+i+"'  onclick='xadmin.open(\"添加用例\",\"./case-edit.jsp?caseid="+caseid+"&caseName="+caseName+"&project="+project+"&domain="+domain+"&requestAddress="+requestAddress+"&method="+method+"&contentType="+contentType+"&parameter="+parameter+"&exResult="+exResult+"&status="+status+"&projectSelect="+projectSelect+"\",800,600)' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
+                            //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑"+i+"' id='"+caseid+"' onclick='showIframe(\"./case-edit.jsp\",800,600)' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
+                        }
+
+
                     }
-                }
+                })
             })
-        })
+
+        });
+
+
+
     </script>
 
 
@@ -242,12 +294,13 @@
         var $table=$('table tbody');
         function clickSelectPage(page,size) {
             var name=$("#projectSelect").val();
+            console.log("clickSelectPage——name:"+name)
             $("table tr td").remove()
             console.log("清除完成")
             $.ajax({
                 type:"POST",
                 dataType:"json",
-                url:"/case/findAllSelectCase?size=10&page=1&projectName="+name,
+                url:"/case/findAllSelectCase?size=10&page="+page+"&projectName="+name,
                 contentType:"application/json;charset=utf-8",
                 success:function (data) {
                     console.log("页面的data:"+data)
@@ -280,8 +333,18 @@
 
                     for (var i = 0; i < data.result.length; i++) {
                         var $tr=$("<tr>"+"</tr>");
-                        var baseURI="${pageContext.request.contextPath}/case/findCaseById?caseid="
+                        var baseURI="${pageContext.request.contextPath}/pages/"
                         var caseid=data.result[i].caseid
+                        var caseName=data.result[i].caseName
+                        var project=data.result[i].project
+                        var domain=data.result[i].domain
+                        var requestAddress=data.result[i].requestAddress
+                        var method=data.result[i].method
+                        var contentType=data.result[i].contentType
+                        var parameter=data.result[i].parameter
+                        var exResult=data.result[i].exResult
+                        var status=data.result[i].status
+                        var statusStr=data.result[i].statusStr
                         var statusStrCss;
                         $table.append($tr);
                         if(data.result[i].statusStr=='启用'){
@@ -292,7 +355,8 @@
                             statusStrCss='layui-btn';
                         }
                         //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑' id='"+caseid+"' href='"+baseURI+""+caseid+"' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delSelectCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
-                        $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>")
+                        //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>")
+                        $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+caseid+"</td>"+"<td>"+caseName+"</td>"+"<td>"+project+"</td>"+"<td>"+domain+"</td>"+"<td>"+requestAddress+"</td>"+"<td>"+method+"</td>"+"<td>"+contentType+"</td>"+"<td>"+parameter+"</td>"+"<td>"+exResult+"<td class='"+statusStrCss+"' >"+statusStr+"</td>"+"<td>"+"<a title='编辑"+i+"'  onclick='xadmin.open(\"添加用例\",\"case-edit.jsp?caseid="+caseid+"&caseName="+caseName+"&project="+project+"&domain="+domain+"&requestAddress="+requestAddress+"&method="+method+"&contentType="+contentType+"&parameter="+parameter+"&exResult="+exResult+"&status="+status+"\",800,600)' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
                     }
                 }
             })
@@ -318,22 +382,26 @@
                     var pageSize = data.obj.pageSize
                     var pageNum = data.obj.pageNum
                     var totalNum = data.obj.total
-                    $('#totalNum').text("总共的页码数："+pageNum+"；总共的用例条数："+totalNum)
+                    $('#totalNum').text("总共的页码数："+pages+"；总共的用例条数："+totalNum)
                     $("table tr td").remove()
                     console.log("清除完成")
-                    //添加th -> 操作
-                    $temp=$('#ith').attr('myth')
-                    if(typeof ($temp)=='undefined'){
-                        $('#itr').append($("<th id='ith' myth='caozuo'>"+"操作"+"</th>"))
-                    }else{
-                        console.log('存在了，不用在添加了')
-                    }
+
 
                     var $table=$('table tbody');
                     for (var i = 0; i <data.result.length; i++) {
                         var $tr=$("<tr>"+"</tr>");
-                        var baseURI="${pageContext.request.contextPath}/case/findCaseById?caseid="
+                        var baseURI="${pageContext.request.contextPath}/pages/"
                         var caseid=data.result[i].caseid
+                        var caseName=data.result[i].caseName
+                        var project=data.result[i].project
+                        var domain=data.result[i].domain
+                        var requestAddress=data.result[i].requestAddress
+                        var method=data.result[i].method
+                        var contentType=data.result[i].contentType
+                        var parameter=data.result[i].parameter
+                        var exResult=data.result[i].exResult
+                        var status=data.result[i].status
+                        var statusStr=data.result[i].statusStr
                         var statusStrCss;
                         $table.append($tr);
                         if(data.result[i].statusStr=='启用'){
@@ -344,19 +412,9 @@
                             statusStrCss='layui-btn';
                         }
 
-                        if(name=="请选择项目"){
-                            console.log("name:"+name)
-                            try{
-                                $("table #ith").remove()
-                            }catch (e) {
-                                console.log(e)
-                            }
+                        //$tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑' id='"+caseid+"' href='"+baseURI+""+caseid+"' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delSelectCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
+                        $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+caseid+"</td>"+"<td>"+caseName+"</td>"+"<td>"+project+"</td>"+"<td>"+domain+"</td>"+"<td>"+requestAddress+"</td>"+"<td>"+method+"</td>"+"<td>"+contentType+"</td>"+"<td>"+parameter+"</td>"+"<td>"+exResult+"<td class='"+statusStrCss+"' >"+statusStr+"</td>"+"<td>"+"<a title='编辑"+i+"'  onclick='xadmin.open(\"添加用例\",\"case-edit.jsp?caseid="+caseid+"&caseName="+caseName+"&project="+project+"&domain="+domain+"&requestAddress="+requestAddress+"&method="+method+"&contentType="+contentType+"&parameter="+parameter+"&exResult="+exResult+"&status="+status+"\",800,600)' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
 
-                            $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>")
-                        }else{
-                            console.log("name:"+name)
-                            $tr.append("<td>"+"<div class=\"layui-unselect layui-form-checkbox\" lay-skin=\"primary\">"+"<i class=\"layui-icon layui-icon-ok\">"+"</i>"+"</div>"+"</td>"+"<td>"+data.result[i].caseid+"</td>"+"<td>"+data.result[i].caseName+"</td>"+"<td>"+data.result[i].project+"</td>"+"<td>"+data.result[i].domain+"</td>"+"<td>"+data.result[i].requestAddress+"</td>"+"<td>"+data.result[i].method+"</td>"+"<td>"+data.result[i].contentType+"</td>"+"<td>"+data.result[i].parameter+"</td>"+"<td>"+data.result[i].exResult+"<td class='"+statusStrCss+"' >"+data.result[i].statusStr+"</td>"+"<td>"+"<a title='编辑' id='"+caseid+"' href='"+baseURI+""+caseid+"' >"+"<i class=\"layui-icon\">&#xe642;</i>"+"</a>"+"<a title='删除' id='"+caseid+"' onclick='delSelectCase(this.id)'>"+"<i class=\"layui-icon\">&#xe640;</i>"+"</a>"+"</td>")
-                        }
                     }
 
 
@@ -380,6 +438,7 @@
             });
         }
     </script>
+
     <script>
         /*用例删除*/
         function delCase(caseid) {
@@ -398,6 +457,7 @@
                         }else{
                             alert("出现未知错误")
                         }
+
                         window.location.reload();
                         console.log("刷新成功")
                     }

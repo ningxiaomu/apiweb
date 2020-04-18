@@ -87,4 +87,12 @@ public interface CaseDao {
      */
     @Select("select project from mycase where caseid=#{caseid}")
     String findProjectById(String caseid);
+
+    /**
+     * 根据用例id查找用例，返回list
+     * @param caseid
+     * @return
+     */
+    @Select("select * from mycase where caseid=#{caseid}")
+    List<CaseInfo> findCaseByIdReturnJson(String caseid);
 }

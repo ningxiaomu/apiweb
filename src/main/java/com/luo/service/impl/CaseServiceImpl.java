@@ -114,5 +114,10 @@ public class CaseServiceImpl implements CaseService {
         return caseDao.findProjectById(caseid);
     }
 
+    @Override
+    public List<CaseInfo> findCaseByIdReturnJson(String caseid) {
+        return caseDao.findCaseByIdReturnJson(caseid);
+    }
+
 
 }

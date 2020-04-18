@@ -80,4 +80,12 @@ public interface UserDao {
 
     @Insert("insert into user_role (userid,roleid) values(#{userId},#{roleId})")
     void addRoleToUser(@Param("userId") String userid,@Param("roleId") String roleid);
+
+    @Select("select count(*) from user")
+    String getUserCount();
+
+    @Select("select count(*) from project")
+    String getProjectCount();
+    @Select("select count(*) from mycase")
+    String getCaseCount();
 }

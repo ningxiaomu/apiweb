@@ -18,4 +18,30 @@ public interface UserService extends UserDetailsService {
      * @return
      */
     List<UserInfo> findAllUserPage(int page, int size);
+
+    /**
+     * 查询status=0的用户
+     * @param page
+     * @param size
+     * @return
+     */
+    List<UserInfo> findUserDel(int page, int size);
+
+    /**
+     * 获取用户数量
+     * @return
+     */
+    String getUserCount();
+
+    /**
+     * 获取项目数量
+     * @return
+     */
+    String getProjectCount();
+
+    /**
+     * 获取用户数量
+     * @return
+     */
+    String getCaseCount();
 }

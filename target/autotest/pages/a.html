@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用例添加</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="../css/font.css">
+    <link rel="stylesheet" href="../css/xadmin.css">
+    <script src="../lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/xadmin.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<input id="testVal" value="123">
+<from action="#">
+    <select name="sel" id="sel">
+        <option value="0" id="red">red</option>
+        <option value="10">green</option>
+        <option value="20">blue</option>
+        <option value="30">yellow</option>
+    </select>
+    <button id="btn">btn</button>
+</from>
+
+
+<a id="b11">b1</a>
+<a id="b22">b2</a>
+<a id="b33">b3</a>
+<a id="b44">b4</a>
+
+<input type="button" onClick="showIframe('https://www.baidu.com',800,600)" value="加载"/>
+
+</body>
+<script type="text/javascript">
+    function showIframe(url,w,h){
+        //添加iframe
+        var if_w = w;
+        var if_h = h;
+        //allowTransparency='true' 设置背景透明
+        $("<iframe width='" + if_w + "' height='" + if_h + "' id='YuFrame1' name='YuFrame1' style='position:absolute;z-index:4;'  frameborder='no' marginheight='0' marginwidth='0' allowTransparency='true'></iframe>").prependTo('body');
+        var st=document.documentElement.scrollTop|| document.body.scrollTop;//滚动条距顶部的距离
+        var sl=document.documentElement.scrollLeft|| document.body.scrollLeft;//滚动条距左边的距离
+        var ch=document.documentElement.clientHeight;//屏幕的高度
+        var cw=document.documentElement.clientWidth;//屏幕的宽度
+        var objH=$("#YuFrame1").height();//浮动对象的高度
+        var objW=$("#YuFrame1").width();//浮动对象的宽度
+        var objT=Number(st)+(Number(ch)-Number(objH))/2;
+        var objL=Number(sl)+(Number(cw)-Number(objW))/2;
+        $("#YuFrame1").css('left',objL);
+        $("#YuFrame1").css('top',objT);
+
+        $("#YuFrame1").attr("src", url)
+
+        //添加背景遮罩
+        $("<div id='YuFrame1Bg' style='display:block;z-index:3;position:absolute;left:0px;top:0px;filter:Alpha(Opacity=30);/* IE */-moz-opacity:0.4;/* Moz + FF */opacity: 0.4; '/>").prependTo('body');
+        var bgWidth = Math.max($("body").width(),cw);
+        var bgHeight = Math.max($("body").height(),ch);
+        $("#YuFrame1Bg").css({width:bgWidth,height:bgHeight});
+
+        //点击背景遮罩移除iframe和背景
+        $("#YuFrame1Bg").click(function() {
+            $("#YuFrame1").remove();
+            $("#YuFrame1Bg").remove();
+        });
+    }
+</script>
+
+</html>

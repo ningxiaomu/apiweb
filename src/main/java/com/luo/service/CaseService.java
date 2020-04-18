@@ -90,4 +90,11 @@ public interface CaseService {
      * @return
      */
     String findProjectById(String caseid);
+
+    /**
+     * 根据id查找用例，返回list
+     * @param caseid
+     * @return
+     */
+    List<CaseInfo> findCaseByIdReturnJson(String caseid);
 }
